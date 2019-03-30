@@ -23,6 +23,7 @@
 package com.djrapitops.extension;
 
 import com.djrapitops.plan.extension.DataExtension;
+import org.bukkit.Bukkit;
 
 import java.util.Optional;
 
@@ -31,12 +32,12 @@ import java.util.Optional;
  *
  * @author Rsl1122
  */
-public class NewExtensionFactory {
+public class EssentialsExtensionFactory {
 
     private boolean isAvailable() {
         try {
-            Class.forName("");
-            return true;
+            Class.forName("com.earth2me.essentials.Essentials");
+            return Bukkit.getPluginManager().isPluginEnabled("Essentials");
         } catch (ClassNotFoundException e) {
             return false;
         }
@@ -44,7 +45,7 @@ public class NewExtensionFactory {
 
     public Optional<DataExtension> createExtension() {
         if (isAvailable()) {
-            return Optional.of(new NewExtension());
+            return Optional.of(new EssentialsExtension());
         }
         return Optional.empty();
     }
