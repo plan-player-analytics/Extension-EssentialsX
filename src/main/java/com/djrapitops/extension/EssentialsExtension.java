@@ -22,6 +22,7 @@
 */
 package com.djrapitops.extension;
 
+import com.djrapitops.plan.extension.CallEvents;
 import com.djrapitops.plan.extension.DataExtension;
 import com.djrapitops.plan.extension.FormatType;
 import com.djrapitops.plan.extension.annotation.*;
@@ -38,7 +39,7 @@ import java.util.*;
  *
  * @author Rsl1122
  */
-@PluginInfo(name = "Essentials", iconName = "flask", iconFamily = Family.SOLID, color = Color.DEEP_ORANGE, updatePlayerDataOnLeave = true)
+@PluginInfo(name = "Essentials", iconName = "flask", iconFamily = Family.SOLID, color = Color.DEEP_ORANGE)
 public class EssentialsExtension implements DataExtension {
 
     private Essentials essentials;
@@ -49,6 +50,13 @@ public class EssentialsExtension implements DataExtension {
 
     EssentialsExtension() {
         essentials = JavaPlugin.getPlugin(Essentials.class);
+    }
+
+    @Override
+    public CallEvents[] callExtensionMethodsOn() {
+        return new CallEvents[]{
+                CallEvents.PLAYER_JOIN, CallEvents.PLAYER_LEAVE
+        };
     }
 
     @BooleanProvider(
