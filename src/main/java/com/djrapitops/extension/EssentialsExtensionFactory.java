@@ -24,17 +24,9 @@ package com.djrapitops.extension;
 
 import com.djrapitops.plan.extension.Caller;
 import com.djrapitops.plan.extension.DataExtension;
-import net.ess3.api.IUser;
-import net.ess3.api.events.JailStatusChangeEvent;
-import net.ess3.api.events.MuteStatusChangeEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Factory for DataExtension.
@@ -60,34 +52,6 @@ public class EssentialsExtensionFactory {
     }
 
     public void registerUpdateListeners(Caller caller) {
-        Plugin plan = Bukkit.getPluginManager().getPlugin("Plan");
-        Bukkit.getPluginManager().registerEvents(new EssentialsEventListener(caller), plan);
-    }
-
-    public static class EssentialsEventListener implements Listener {
-
-        private final Caller caller;
-
-        public EssentialsEventListener(Caller caller) {
-            this.caller = caller;
-        }
-
-        @EventHandler(priority = EventPriority.MONITOR)
-        public void onJailStatusChange(JailStatusChangeEvent event) {
-            IUser affected = event.getAffected();
-            UUID playerUUID = affected.getBase().getUniqueId();
-            String playerName = affected.getName();
-
-            caller.updatePlayerData(playerUUID, playerName);
-        }
-
-        @EventHandler(priority = EventPriority.MONITOR)
-        public void onMuteStatusChange(MuteStatusChangeEvent event) {
-            IUser affected = event.getAffected();
-            UUID playerUUID = affected.getBase().getUniqueId();
-            String playerName = affected.getName();
-
-            caller.updatePlayerData(playerUUID, playerName);
-        }
+        EssentialsEventListener.register(caller);
     }
 }
