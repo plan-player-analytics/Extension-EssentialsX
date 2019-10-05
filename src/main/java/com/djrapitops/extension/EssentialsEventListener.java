@@ -26,7 +26,9 @@ import com.djrapitops.plan.extension.Caller;
 import net.ess3.api.IUser;
 import net.ess3.api.events.JailStatusChangeEvent;
 import net.ess3.api.events.MuteStatusChangeEvent;
+import net.ess3.api.events.UserBalanceUpdateEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -68,5 +70,12 @@ public class EssentialsEventListener implements Listener {
         String playerName = affected.getName();
 
         caller.updatePlayerData(playerUUID, playerName);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBalanceChange(UserBalanceUpdateEvent event) {
+        Player player = event.getPlayer();
+
+        caller.updatePlayerData(player.getUniqueId(), player.getName());
     }
 }
