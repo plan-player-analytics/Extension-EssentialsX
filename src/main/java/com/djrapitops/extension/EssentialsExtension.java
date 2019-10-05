@@ -45,6 +45,7 @@ import java.util.*;
  * @author Vankka
  */
 @PluginInfo(name = "Essentials", iconName = "flask", iconFamily = Family.SOLID, color = Color.DEEP_ORANGE)
+@InvalidateMethod("hasUser")
 public class EssentialsExtension implements DataExtension {
 
     private Essentials essentials;
@@ -125,23 +126,23 @@ public class EssentialsExtension implements DataExtension {
         return homeString.toString();
     }
 
-    @StringProvider(
+    @DoubleProvider(
             text = "Balance", iconName = "coins", priority = 60, iconColor = Color.GREEN
     )
-    public String balance(UUID playerUUID) {
+    public double balance(UUID playerUUID) {
         if (essentials.getSettings().isEcoDisabled()) {
-            return null;
+            return -1.0;
         }
 
-        return getUser(playerUUID).getMoney().toString();
+        return getUser(playerUUID).getMoney().doubleValue();
     }
 
-    @StringProvider(
+    @DoubleProvider(
             text = "Total Server Balance", iconName = "coins", priority = 50, iconColor = Color.GREEN
     )
-    public String totalServerBalance() {
+    public double totalServerBalance() {
         if (essentials.getSettings().isEcoDisabled()) {
-            return null;
+            return -1.0;
         }
 
         // Source: EssentialsX
@@ -162,7 +163,7 @@ public class EssentialsExtension implements DataExtension {
             }
         }
 
-        return totalMoney.toString();
+        return totalMoney.doubleValue();
     }
 
 }
