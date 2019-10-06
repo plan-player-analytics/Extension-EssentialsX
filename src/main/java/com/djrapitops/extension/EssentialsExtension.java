@@ -34,7 +34,9 @@ import com.earth2me.essentials.User;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * DataExtension for Essentials plugin.
@@ -131,7 +133,7 @@ public class EssentialsExtension implements DataExtension {
     )
     public double balance(UUID playerUUID) {
         if (essentials.getSettings().isEcoDisabled()) {
-            return -1.0;
+            throw new NotReadyException();
         }
 
         return getUser(playerUUID).getMoney().doubleValue();
@@ -142,7 +144,7 @@ public class EssentialsExtension implements DataExtension {
     )
     public double totalServerBalance() {
         if (essentials.getSettings().isEcoDisabled()) {
-            return -1.0;
+            throw new NotReadyException();
         }
 
         // Source: EssentialsX
