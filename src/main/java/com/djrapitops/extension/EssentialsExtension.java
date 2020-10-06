@@ -33,7 +33,6 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -48,6 +47,7 @@ import java.util.UUID;
  */
 @PluginInfo(name = "Essentials", iconName = "flask", iconFamily = Family.SOLID, color = Color.DEEP_ORANGE)
 @InvalidateMethod("hasUser")
+@InvalidateMethod("totalServerBalance")
 public class EssentialsExtension implements DataExtension {
 
     private Essentials essentials;
@@ -139,33 +139,33 @@ public class EssentialsExtension implements DataExtension {
         return getUser(playerUUID).getMoney().doubleValue();
     }
 
-    @DoubleProvider(
-            text = "Total Server Balance", iconName = "coins", priority = 50, iconColor = Color.GREEN
-    )
-    public double totalServerBalance() {
-        if (essentials.getSettings().isEcoDisabled()) {
-            throw new NotReadyException();
-        }
-
-        // Source: EssentialsX
-        // https://github.com/EssentialsX/Essentials/blob/2.x/Essentials/src/com/earth2me/essentials/commands/Commandbalancetop.java
-        BigDecimal totalMoney = BigDecimal.ZERO;
-        for (UUID uuid : essentials.getUserMap().getAllUniqueUsers()) {
-            final User user = essentials.getUserMap().getUser(uuid);
-            if (user != null) {
-                if (!essentials.getSettings().isNpcsInBalanceRanking() && user.isNPC()) {
-                    // Don't list NPCs in output
-                    continue;
-                }
-                if (!user.isAuthorized("essentials.balancetop.exclude")) {
-                    final BigDecimal userMoney = user.getMoney();
-                    user.updateMoneyCache(userMoney);
-                    totalMoney = totalMoney.add(userMoney);
-                }
-            }
-        }
-
-        return totalMoney.doubleValue();
-    }
+//    @DoubleProvider(
+//            text = "Total Server Balance", iconName = "coins", priority = 50, iconColor = Color.GREEN
+//    )
+//    public double totalServerBalance() {
+//        if (essentials.getSettings().isEcoDisabled()) {
+//            throw new NotReadyException();
+//        }
+//
+//        // Source: EssentialsX
+//        // https://github.com/EssentialsX/Essentials/blob/2.x/Essentials/src/com/earth2me/essentials/commands/Commandbalancetop.java
+//        BigDecimal totalMoney = BigDecimal.ZERO;
+//        for (UUID uuid : essentials.getUserMap().getAllUniqueUsers()) {
+//            final User user = essentials.getUserMap().getUser(uuid);
+//            if (user != null) {
+//                if (!essentials.getSettings().isNpcsInBalanceRanking() && user.isNPC()) {
+//                    // Don't list NPCs in output
+//                    continue;
+//                }
+//                if (!user.isAuthorized("essentials.balancetop.exclude")) {
+//                    final BigDecimal userMoney = user.getMoney();
+//                    user.updateMoneyCache(userMoney);
+//                    totalMoney = totalMoney.add(userMoney);
+//                }
+//            }
+//        }
+//
+//        return totalMoney.doubleValue();
+//    }
 
 }
