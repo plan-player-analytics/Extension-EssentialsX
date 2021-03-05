@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2019 Risto Lahtela (Rsl1122)
+    Copyright(c) 2019 Risto Lahtela (AuroraLS3)
 
     The MIT License(MIT)
 
@@ -39,10 +39,10 @@ import java.util.UUID;
 
 /**
  * DataExtension for Essentials plugin.
- *
+ * <p>
  * Economy Support by Vankka
  *
- * @author Rsl1122
+ * @author AuroraLS3
  * @author Vankka
  */
 @PluginInfo(name = "Essentials", iconName = "flask", iconFamily = Family.SOLID, color = Color.DEEP_ORANGE)
