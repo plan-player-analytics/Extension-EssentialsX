@@ -23,50 +23,36 @@
 package com.djrapitops.extension;
 
 import com.djrapitops.plan.extension.Caller;
-import net.ess3.api.IUser;
-import net.ess3.api.events.JailStatusChangeEvent;
-import net.ess3.api.events.MuteStatusChangeEvent;
+import net.ess3.api.events.UserBalanceUpdateEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-
-import java.util.UUID;
 
 /**
  * Listener for Essentials events.
  *
  * @author AuroraLS3
  */
-public class EssentialsEventListener implements Listener {
+public class EssentialsEconomyEventListener implements Listener {
 
     private final Caller caller;
 
-    public EssentialsEventListener(Caller caller) {
+    public EssentialsEconomyEventListener(Caller caller) {
         this.caller = caller;
     }
 
     public static void register(Caller caller) {
         Plugin plan = Bukkit.getPluginManager().getPlugin("Plan");
-        Bukkit.getPluginManager().registerEvents(new EssentialsEventListener(caller), plan);
+        Bukkit.getPluginManager().registerEvents(new EssentialsEconomyEventListener(caller), plan);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onJailStatusChange(JailStatusChangeEvent event) {
-        IUser affected = event.getAffected();
-        UUID playerUUID = affected.getBase().getUniqueId();
-        String playerName = affected.getName();
+    public void onBalanceChange(UserBalanceUpdateEvent event) {
+        Player player = event.getPlayer();
 
-        caller.updatePlayerData(playerUUID, playerName);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onMuteStatusChange(MuteStatusChangeEvent event) {
-        IUser affected = event.getAffected();
-        UUID playerUUID = affected.getBase().getUniqueId();
-        String playerName = affected.getName();
-
-        caller.updatePlayerData(playerUUID, playerName);
+        caller.updatePlayerData(player.getUniqueId(), player.getName());
     }
 }

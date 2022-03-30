@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2019 Risto Lahtela (AuroraLS3)
+    Copyright(c) 2019 AuroraLS3
 
     The MIT License(MIT)
 
@@ -51,7 +51,21 @@ public class EssentialsExtensionFactory {
         return Optional.empty();
     }
 
+    public Optional<DataExtension> createEcoExtension() {
+        if (isAvailable()) {
+            EssentialsEconomyExtension extension = new EssentialsEconomyExtension();
+            if (EssentialsEconomyExtension.enabled.get()) {
+                return Optional.of(extension);
+            }
+        }
+        return Optional.empty();
+    }
+
     public void registerUpdateListeners(Caller caller) {
         EssentialsEventListener.register(caller);
+    }
+
+    public void registerEconomyUpdateListeners(Caller caller) {
+        EssentialsEconomyEventListener.register(caller);
     }
 }

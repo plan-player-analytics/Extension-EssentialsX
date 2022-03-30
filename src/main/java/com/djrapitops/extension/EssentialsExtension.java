@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2019 Risto Lahtela (AuroraLS3)
+    Copyright(c) 2019 AuroraLS3
 
     The MIT License(MIT)
 
@@ -47,7 +47,8 @@ import java.util.UUID;
  */
 @PluginInfo(name = "Essentials", iconName = "flask", iconFamily = Family.SOLID, color = Color.DEEP_ORANGE)
 @InvalidateMethod("hasUser")
-@InvalidateMethod("totalServerBalance")
+@InvalidateMethod("totalServerBalance") // Was asking for non-existent players
+@InvalidateMethod("balance") // CPU intensive, moved to EssentialsEco extension
 public class EssentialsExtension implements DataExtension {
 
     private Essentials essentials;
@@ -127,45 +128,5 @@ public class EssentialsExtension implements DataExtension {
 
         return homeString.toString();
     }
-
-    @DoubleProvider(
-            text = "Balance", iconName = "coins", priority = 60, iconColor = Color.GREEN
-    )
-    public double balance(UUID playerUUID) {
-        if (essentials.getSettings().isEcoDisabled()) {
-            throw new NotReadyException();
-        }
-
-        return getUser(playerUUID).getMoney().doubleValue();
-    }
-
-//    @DoubleProvider(
-//            text = "Total Server Balance", iconName = "coins", priority = 50, iconColor = Color.GREEN
-//    )
-//    public double totalServerBalance() {
-//        if (essentials.getSettings().isEcoDisabled()) {
-//            throw new NotReadyException();
-//        }
-//
-//        // Source: EssentialsX
-//        // https://github.com/EssentialsX/Essentials/blob/2.x/Essentials/src/com/earth2me/essentials/commands/Commandbalancetop.java
-//        BigDecimal totalMoney = BigDecimal.ZERO;
-//        for (UUID uuid : essentials.getUserMap().getAllUniqueUsers()) {
-//            final User user = essentials.getUserMap().getUser(uuid);
-//            if (user != null) {
-//                if (!essentials.getSettings().isNpcsInBalanceRanking() && user.isNPC()) {
-//                    // Don't list NPCs in output
-//                    continue;
-//                }
-//                if (!user.isAuthorized("essentials.balancetop.exclude")) {
-//                    final BigDecimal userMoney = user.getMoney();
-//                    user.updateMoneyCache(userMoney);
-//                    totalMoney = totalMoney.add(userMoney);
-//                }
-//            }
-//        }
-//
-//        return totalMoney.doubleValue();
-//    }
 
 }
