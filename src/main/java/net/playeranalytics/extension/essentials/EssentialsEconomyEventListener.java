@@ -20,7 +20,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-package com.djrapitops.extension;
+package net.playeranalytics.extension.essentials;
 
 import com.djrapitops.plan.extension.Caller;
 import net.ess3.api.events.UserBalanceUpdateEvent;
